@@ -1,4 +1,4 @@
-oT Smart Home Energy Monitor 💡
+IoT Smart Home Energy Monitor 💡
 A Node-RED project to simulate, monitor, and control household energy usage using a cloud-based MQTT loop.
 
 Features
