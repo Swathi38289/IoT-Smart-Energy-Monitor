@@ -28,9 +28,10 @@ You must have Node.js and Node-RED installed locally.
 2. Run the Flow
 Start Node-RED:
 
-  Bash
+      Bash
 
   ```node-red```
+  
   Import the Project: Go to the Node-RED editor, click the ☰ Menu, select Import, and upload the flows.json file.
 
 View Dashboard: Once deployed, open the browser to the dashboard URL: http://localhost:1880/dashboard/page1
