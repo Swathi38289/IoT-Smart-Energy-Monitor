@@ -1,0 +1,379 @@
+[
+    {
+        "id": "6425a1c5cf8a28d4",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "54bd1b5fc55fa7d6",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.hivemq.com",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "f95b052140011b1f",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": true
+    },
+    {
+        "id": "654d70f497c5a595",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "b0c7de87858264be",
+        "type": "ui-page",
+        "name": "Page 1",
+        "ui": "f95b052140011b1f",
+        "path": "/page1",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "654d70f497c5a595",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": 0,
+                "cols": 3
+            },
+            {
+                "name": "Tablet",
+                "px": 576,
+                "cols": 6
+            },
+            {
+                "name": "Small Desktop",
+                "px": 768,
+                "cols": 9
+            },
+            {
+                "name": "Desktop",
+                "px": 1024,
+                "cols": 12
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "02dd7de345f85d25",
+        "type": "ui-group",
+        "name": "Group 1",
+        "page": "b0c7de87858264be",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": true,
+        "disabled": false,
+        "groupType": "default"
+    },
+    {
+        "id": "02e87fc9cad5bd41",
+        "type": "mqtt in",
+        "z": "6425a1c5cf8a28d4",
+        "name": "",
+        "topic": "swathi/home/appliance1",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "54bd1b5fc55fa7d6",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 420,
+        "wires": [
+            [
+                "0b649315b7fd86bd"
+            ]
+        ]
+    },
+    {
+        "id": "38f5cda222809d0e",
+        "type": "mqtt out",
+        "z": "6425a1c5cf8a28d4",
+        "name": "",
+        "topic": "swathi/home/appliance1",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "54bd1b5fc55fa7d6",
+        "x": 350,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "0b649315b7fd86bd",
+        "type": "json",
+        "z": "6425a1c5cf8a28d4",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 350,
+        "y": 420,
+        "wires": [
+            [
+                "d3dc4a8a2bcb02fd",
+                "ef624098f5395f73"
+            ]
+        ]
+    },
+    {
+        "id": "ef624098f5395f73",
+        "type": "function",
+        "z": "6425a1c5cf8a28d4",
+        "name": "function 1",
+        "func": "// This function handles cost calculation AND prepares the chart data.\n\n// Use a simple variable for the incoming power value (guaranteed to be a number)\nconst power = Number(msg.payload.power_W);\nconst costPerKWH = 0.15; \n\n// --- 1. HANDLE STUCK/NULL STATE ---\n// If the number conversion fails (results in NaN), set the payload to 0.000\nif (isNaN(power)) {\n    msg.payload = \"0.000\";\n    msg.powerValue = 0;\n    return msg;\n}\n\n// --- 2. CALCULATION ---\n// Calculate cost (Watts / 1000 * Rate)\nconst costPerHour = (power / 1000) * costPerKWH;\n\n// --- 3. OUTPUTS ---\n// Set the message payload to the final formatted cost (for the Cost per Hour display)\nmsg.payload = costPerHour.toFixed(3); \n\n// Set a separate property for the chart to track the raw wattage (for the Energy Monitoring chart)\nmsg.powerValue = power; \n\nreturn msg.payload;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 520,
+        "wires": [
+            [
+                "673de06b5e0e4a04"
+            ]
+        ]
+    },
+    {
+        "id": "673de06b5e0e4a04",
+        "type": "ui-text",
+        "z": "6425a1c5cf8a28d4",
+        "group": "02dd7de345f85d25",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Cost per Hour",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": false,
+        "className": "",
+        "value": "$msg.payload",
+        "valueType": "jsonata",
+        "x": 800,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "0f4584fc994f7c07",
+        "type": "ui-switch",
+        "z": "6425a1c5cf8a28d4",
+        "name": "",
+        "label": "Appliance control",
+        "group": "02dd7de345f85d25",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": false,
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "className": "",
+        "layout": "row-spread",
+        "clickableArea": "switch",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 90,
+        "y": 640,
+        "wires": [
+            [
+                "0410df17fd5b7330"
+            ]
+        ]
+    },
+    {
+        "id": "0410df17fd5b7330",
+        "type": "change",
+        "z": "6425a1c5cf8a28d4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"power_W\": 75, \"status\": \"ON\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 640,
+        "wires": [
+            [
+                "72f0994b7e554e65"
+            ]
+        ]
+    },
+    {
+        "id": "72f0994b7e554e65",
+        "type": "mqtt out",
+        "z": "6425a1c5cf8a28d4",
+        "name": "",
+        "topic": "swathi/home/appliance1",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "54bd1b5fc55fa7d6",
+        "x": 810,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "d3dc4a8a2bcb02fd",
+        "type": "ui-chart",
+        "z": "6425a1c5cf8a28d4",
+        "group": "02dd7de345f85d25",
+        "name": "Energy monitoring",
+        "label": "cost per hour",
+        "order": 9007199254740991,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
+        "ymin": "",
+        "ymax": "",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": 8,
+        "className": "",
+        "interpolation": "linear",
+        "x": 690,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "08423fcb2f58a411",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "@flowfuse/node-red-dashboard": "1.27.2"
+        }
+    }
+]
