@@ -1,8 +1,8 @@
-#IoT Smart Home Energy Monitor 💡
+# IoT Smart Home Energy Monitor 💡
 
 A Node-RED project to simulate, monitor, and control household energy usage using a cloud-based MQTT loop.
 
-##Features
+## Features
 
 End-to-End IoT Flow: Demonstrates a complete system from data source to web interface.
 
@@ -12,7 +12,7 @@ Real-Time Data Processing: Uses a JavaScript function to transform raw power rea
 
 Cloud Connectivity: Utilizes a public MQTT Broker (HiveMQ) for reliable, asynchronous communication.
 
-##Project Criteria
+## Project Criteria
 
 Criteria	Component	Value
 Data Processing	function node	Calculates Cost
@@ -21,7 +21,7 @@ Cloud Protocol	mqtt in / mqtt out	Data transport
 Visualization	ui-chart & ui-text	Live display
 
 
-##Quick Start
+## Quick Start
 1. Prerequisites
 You must have Node.js and Node-RED installed locally.
 
@@ -40,7 +40,7 @@ Toggle the Appliance Control switch ON and observe the Cost per Hour update from
 
 The Chart will plot the change in wattage (from 0 to 75).
 
-##Development
+## Development
 The final, working flow uses the following critical logic steps:
 
 JSONata Logic is used inside the final change node for conditional routing: $payload = 'ON' ? {ON_JSON} : {OFF_JSON}
