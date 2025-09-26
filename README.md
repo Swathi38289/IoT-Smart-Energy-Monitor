@@ -17,8 +17,8 @@ A Node-RED project to simulate, monitor, and control household energy usage usin
 - Criteria	Component	Value
 - Data Processing	function node	Calculates Cost
 - Control Logic	ui-switch & change node	Two-way control
-Cloud Protocol	mqtt in / mqtt out	Data transport
-Visualization	ui-chart & ui-text	Live display
+- Cloud Protocol	mqtt in / mqtt out	Data transport
+- Visualization	ui-chart & ui-text	Live display
 
 
 ## Quick Start
@@ -43,6 +43,6 @@ The Chart will plot the change in wattage (from 0 to 75).
 ## Development
 The final, working flow uses the following critical logic steps:
 
-JSONata Logic is used inside the final change node for conditional routing: $payload = 'ON' ? {ON_JSON} : {OFF_JSON}
+- JSONata Logic is used inside the final change node for conditional routing: $payload = 'ON' ? {ON_JSON} : {OFF_JSON}
 
-Number Conversion is used in the function node to ensure mathematical stability.
+- Number Conversion is used in the function node to ensure mathematical stability.
