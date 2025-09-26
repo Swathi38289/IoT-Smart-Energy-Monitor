@@ -30,11 +30,11 @@ Start Node-RED:
 
       Bash
 
-  ```node-red```
+     ```node-red```
   
-  Import the Project: Go to the Node-RED editor, click the ☰ Menu, select Import, and upload the flows.json file.
+     Import the Project: Go to the Node-RED editor, click the ☰ Menu, select Import, and upload the flows.json file.
 
-View Dashboard: Once deployed, open the browser to the dashboard URL: http://localhost:1880/dashboard/page1
+     View Dashboard: Once deployed, open the browser to the dashboard URL: http://localhost:1880/dashboard/page1
 
 3. Verification
 Toggle the Appliance Control switch ON and observe the Cost per Hour update from 0.000 to approximately 0.011.
