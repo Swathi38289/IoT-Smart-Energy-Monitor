@@ -15,9 +15,13 @@
 ## Project Criteria
 
 - Criteria	Component	Value
+  
 - Data Processing	function node	Calculates Cost
+  
 - Control Logic	ui-switch & change node	Two-way control
+  
 - Cloud Protocol	mqtt in / mqtt out	Data transport
+  
 - Visualization	ui-chart & ui-text	Live display
 
 
